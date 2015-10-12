@@ -31,16 +31,18 @@ public class Movement : MonoBehaviour {
 		if (Input.GetButtonUp("Jump") && !grounded)     // Player stops pressing the button
 			jumpCancel = true;
 		//***********************************Jump Mechanic****************************************************//
-		
+
 		//***********************************Platform Mechanic****************************************************//
-		if (Input.GetButton ("Jump")) { // Change to No Platform Collision layer
+		if (Input.GetButtonDown ("Jump") || Input.GetButton ("Jump") || Input.GetButtonUp ("Jump")) { // Change to No Platform Collision layer
 			gameObject.layer = 10;
 		} else if (!Input.GetButton ("Jump")) { // Change to Player layer
 			gameObject.layer = 8;
 		} 
-		if (Input.GetButton("Vertical")) {
+		if (Input.GetAxis("Vertical") < 0) {
 			gameObject.layer = 10;
+			GetComponent<BoxCollider2D>().enabled = false;
 		}
+		GetComponent<BoxCollider2D>().enabled = true;
 		//***********************************Platform Mechanic****************************************************//
 	
 	}
