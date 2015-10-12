@@ -38,11 +38,11 @@ public class Movement : MonoBehaviour {
 		} else if (!Input.GetButton ("Jump")) { // Change to Player layer
 			gameObject.layer = 8;
 		} 
-		if (Input.GetAxis("Vertical") < 0) {
+		if (grounded && Input.GetAxis("Vertical") < 0) {
 			gameObject.layer = 10;
 			GetComponent<BoxCollider2D>().enabled = false;
 		}
-		GetComponent<BoxCollider2D>().enabled = true;
+		GetComponent<BoxCollider2D> ().enabled = true;
 		//***********************************Platform Mechanic****************************************************//
 	
 	}
