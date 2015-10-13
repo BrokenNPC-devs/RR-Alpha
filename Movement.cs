@@ -7,17 +7,19 @@ public class Movement : MonoBehaviour {
 	public float maxSpeed = 10f;       //tweakable
 	public LayerMask whatIsGround;
 	public Transform groundCheck;
-	public float jumpShortSpeed = 10f;   // tweakable
-	public float jumpSpeed = 55f;  		// tweakable
+	public float jumpShortSpeed = 20f;   //tweakable
+	public float jumpSpeed = 55f;		//tweakable
 
 	bool facingRight = true;
 	bool grounded = false;
 	float groundRadius = 0.2f;
 	bool jump = false;
 	bool jumpCancel = false;
+	Rigidbody2D rb;
 
 	void Start () {
 	
+		rb = GetComponent<Rigidbody2D> ();
 	}
 
 	void Update () {
@@ -25,24 +27,23 @@ public class Movement : MonoBehaviour {
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround); // ground
 
 		//***********************************Jump Mechanic****************************************************//
-		if (Input.GetButtonDown("Jump") && grounded) { // Player presses button
+		if (Input.GetButtonDown("Jump") && grounded)   // Player starts pressing the button
 			jump = true;
-		}
 		if (Input.GetButtonUp("Jump") && !grounded)     // Player stops pressing the button
 			jumpCancel = true;
 		//***********************************Jump Mechanic****************************************************//
 
 		//***********************************Platform Mechanic****************************************************//
-		if (Input.GetButtonDown ("Jump") || Input.GetButton ("Jump") || Input.GetButtonUp ("Jump")) { // Change to No Platform Collision layer
+		if (grounded && Input.GetButtonDown("Jump")) { // Change to No Platform Collision layer
 			gameObject.layer = 10;
 		} else if (!Input.GetButton ("Jump")) { // Change to Player layer
 			gameObject.layer = 8;
 		} 
+
 		if (grounded && Input.GetAxis("Vertical") < 0) {
 			gameObject.layer = 10;
-			GetComponent<BoxCollider2D>().enabled = false;
+			Physics2D.gravity = new Vector2(0f, -300f); //change gravity to x2 normal gravity
 		}
-		GetComponent<BoxCollider2D> ().enabled = true;
 		//***********************************Platform Mechanic****************************************************//
 	
 	}
@@ -52,11 +53,12 @@ public class Movement : MonoBehaviour {
 	
 		//***********************************Horizontal Movement****************************************************//
 		float move = Input.GetAxisRaw ("Horizontal");
-		GetComponent<Rigidbody2D> ().velocity = new Vector2 (move * maxSpeed, GetComponent<Rigidbody2D> ().velocity.y);
+		rb.velocity = new Vector2 (move * maxSpeed, rb.velocity.y);
 
 		if (move > 0 && !facingRight) {
 			Flip ();
 		}
+
 		if (move < 0 && facingRight) {
 			Flip ();
 		}
@@ -65,21 +67,21 @@ public class Movement : MonoBehaviour {
 
 
 		//***********************************Jump Mechanic****************************************************//
-		if (jump)
-		{
-			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpSpeed);
+		if (jump) {
+			rb.gravityScale = 0.3f;
+			rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
 			jump = false;
 		}
-		if (jumpCancel)
-		{
-			if (GetComponent<Rigidbody2D>().velocity.y > jumpShortSpeed)
-			{ 
-				GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpShortSpeed);
+
+		if (jumpCancel) {
+			if (rb.velocity.y > jumpShortSpeed) { 
+				rb.gravityScale = 0.3f;
+				rb.velocity = new Vector2(rb.velocity.x, jumpShortSpeed);
 			}
 			jumpCancel = false;
 		}
-		if (grounded == true) 
-			Physics2D.gravity = new Vector2 (0, -150); //tweakable
+		rb.gravityScale = 1f;
+		Physics2D.gravity = new Vector2 (0, -150); //tweakable
 		//***********************************Jump Mechanic****************************************************//
 	
 	}
