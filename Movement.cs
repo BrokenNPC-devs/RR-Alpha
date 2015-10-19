@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
 
-	public float walkSpeed = 5f;      //tweakable
-	public float runSpeed = 20;       //tweakable
+	public float walkSpeed = 10f;      //tweakable
+	public float runSpeed = 50f;       //tweakable
 	public float jumpSpeed = 55f;     //tweakable
 	public LayerMask whatIsGround;
 	public Transform groundCheck;
@@ -15,10 +15,11 @@ public class Movement : MonoBehaviour {
 	bool jumpCancel = false;
 	float groundRadius = 0.2f;
 	float dropTime = 0f;
+	float lastTime = -1.0f;
 	Rigidbody2D rb;
 
 
-	//test
+
 
 	void Start () {
 	
@@ -29,37 +30,58 @@ public class Movement : MonoBehaviour {
 
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround); // Find Ground
 		gameObject.layer = 8;
-		//***********************************Platform Mechanic****************************************************//
-		if (Input.GetAxis("Vertical") < 0 && Input.GetButton ("Jump") && grounded) {
+
+
+		// Platform Mechanic
+		if (Input.GetAxis ("Vertical") < 0 && Input.GetButtonDown ("Jump") && grounded) {
 			jump = false;
-			Physics2D.IgnoreLayerCollision(8, 9);
+			Physics2D.IgnoreLayerCollision (8, 9);
 			dropTime = Time.time;
 		}
 		if (Time.time - dropTime > 0f && Time.time - dropTime >= 0.15f) {
 			Physics2D.IgnoreLayerCollision (8, 9, false);
 			dropTime = 0f;
 		}
-		//***********************************Platform Mechanic****************************************************//
 
-		
-		//***********************************Jump Mechanic****************************************************//
-		if (Input.GetButtonDown ("Jump") && grounded && Input.GetAxisRaw("Vertical") == 0)  // Player starts pressing the button
+
+		// Jump Mechanic
+		if (Input.GetButtonDown ("Jump") && grounded && Input.GetAxisRaw ("Vertical") == 0)  // Player starts pressing the button
 			jump = true;
 		if (Input.GetButtonUp ("Jump") && !grounded)   // Player stops pressing the button
 			jumpCancel = true;
-		//***********************************Jump Mechanic****************************************************//
+
+
+		// Double Tap Mechanic
+		//Walk ();
+		Run ();
+
 	}
-	
-	void FixedUpdate () {
-		
-		float move = Input.GetAxisRaw ("Horizontal");
+
+	void Run() {
+
+		float move = Input.GetAxisRaw("Horizontal");
 		if (move > 0 && !facingRight)
 			Flip ();
 		if (move < 0 && facingRight) 
 			Flip ();
 		rb.velocity = new Vector2 (move * runSpeed, rb.velocity.y);
 
-		//***********************************Jump Mechanic****************************************************//
+	}
+
+	void Walk() {
+
+		float move = Input.GetAxisRaw("Horizontal");
+		if (move > 0 && !facingRight)
+			Flip ();
+		if (move < 0 && facingRight) 
+			Flip ();
+		rb.velocity = new Vector2 (move * walkSpeed, rb.velocity.y);
+
+	}
+
+	void FixedUpdate () {
+
+		// Jump Mechanic
 		if (jump) {
 			rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
 			jump = false;
@@ -71,7 +93,7 @@ public class Movement : MonoBehaviour {
 			}
 			jumpCancel = false;
 		}
-		//***********************************Jump Mechanic****************************************************//
+
 	
 	}
 	
