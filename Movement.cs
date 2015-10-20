@@ -13,9 +13,12 @@ public class Movement : MonoBehaviour {
 	bool grounded = false;
 	bool jump = false;
 	bool jumpCancel = false;
-	float groundRadius = 0.2f;
+	bool doubleTap = false;
+	float groundRadius = 0.2f; //tweakable
 	float dropTime = 0f;
-	float lastTime = -1.0f;
+	float dropDiff = 0.15f; //tweakable
+	float tapTime = 0f; 
+	float tapDiff = 0.2f; //tweakable
 	Rigidbody2D rb;
 
 
@@ -38,7 +41,7 @@ public class Movement : MonoBehaviour {
 			Physics2D.IgnoreLayerCollision (8, 9);
 			dropTime = Time.time;
 		}
-		if (Time.time - dropTime > 0f && Time.time - dropTime >= 0.15f) {
+		if (Time.time - dropTime > 0f && Time.time - dropTime >= dropDiff) {
 			Physics2D.IgnoreLayerCollision (8, 9, false);
 			dropTime = 0f;
 		}
@@ -52,8 +55,18 @@ public class Movement : MonoBehaviour {
 
 
 		// Double Tap Mechanic
-		//Walk ();
-		Run ();
+		if (Input.GetButtonDown ("Horizontal")) {
+			if(Time.time - tapTime > 0f && Time.time - tapTime < tapDiff)
+				doubleTap = true;
+			else if(Time.time - tapTime == 0f || Time.time - tapTime > tapDiff)
+				doubleTap = false;
+			tapTime = Time.time;
+		}
+		if (doubleTap)
+			Run ();
+		if (!doubleTap)
+			Walk ();
+
 
 	}
 
@@ -65,7 +78,8 @@ public class Movement : MonoBehaviour {
 		if (move < 0 && facingRight) 
 			Flip ();
 		rb.velocity = new Vector2 (move * runSpeed, rb.velocity.y);
-
+		if (!Input.GetButton ("Horizontal"))
+			doubleTap = false;
 	}
 
 	void Walk() {
