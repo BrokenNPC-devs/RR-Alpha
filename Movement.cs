@@ -2,10 +2,7 @@
 using System.Collections;
 
 public class Movement : MonoBehaviour {
-	
-	public float walkSpeed = 10f;      //tweakable
-	public float runSpeed = 50f;       //tweakable
-	public float jumpSpeed = 55f;     //tweakable
+
 	public LayerMask ground;
 	public Transform groundCheck;
 	public float groundRadius = 0.75f; //tweakable
@@ -17,9 +14,11 @@ public class Movement : MonoBehaviour {
 	bool isGrounded = false;
 	float dropTime = 0f;
 	float dropDiff = 0.15f; //tweakable
-	float deltay;
 	float tapTime = 0f; 
 	float tapDiff = 0.2f; //tweakable
+	float walkSpeed = 10f;      //tweakable
+	float runSpeed = 50f;       //tweakable
+	float jumpSpeed = 55f;     //tweakable
 	Rigidbody2D rb;
 
 
