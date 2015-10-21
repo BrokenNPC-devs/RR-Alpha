@@ -5,20 +5,22 @@ public class Movement : MonoBehaviour {
 
 	public LayerMask ground;
 	public Transform groundCheck;
-	public float groundRadius = 0.75f; //tweakable
-	
+
 	bool facingRight = true;
 	bool jump = false;
 	bool jumpCancel = false;
 	bool doubleTap = false;
 	bool isGrounded = false;
+
 	float dropTime = 0f;
-	float dropDiff = 0.15f; //tweakable
+	float dropDiff = 0.15f;     //tweakable
 	float tapTime = 0f; 
-	float tapDiff = 0.2f; //tweakable
+	float tapDiff = 0.2f;       //tweakable
 	float walkSpeed = 10f;      //tweakable
-	float runSpeed = 50f;       //tweakable
+	float runSpeed = 20f;       //tweakable
 	float jumpSpeed = 55f;     //tweakable
+	float groundRadius = 0.75f; //tweakable
+
 	Rigidbody2D rb;
 
 
@@ -53,7 +55,7 @@ public class Movement : MonoBehaviour {
 		
 		
 		// Double Tap Mechanic
-		if (Input.GetButtonDown ("Horizontal")) {
+		if (Input.GetButtonDown ("Horizontal") && isGrounded) {
 			if(Time.time - tapTime > 0f && Time.time - tapTime < tapDiff)
 				doubleTap = true;
 			else if(Time.time - tapTime == 0f || Time.time - tapTime > tapDiff)
