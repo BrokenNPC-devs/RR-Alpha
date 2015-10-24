@@ -1,0 +1,29 @@
+Layers: 
+
+- Make layer 8 the "player" layer, R and all her children objects should be on that layer
+
+- Make layer 9 the "platform" layer, all platforms should be on this layer
+
+Colliders: 
+
+- R should be a 2D box collider 
+
+- All platforms should be 2D edge colliders
+
+	1) Check the "Used By Effector" Box
+
+	2) Add "Platform Effector 2D"
+
+	3) Check the "Use One Way" Box
+
+	4) Make the "Surface Arc" 90 degrees (Tweakable)
+
+- Make the ground whatever kind of collider you want
+
+Grounding:
+
+- Click on the link below and skip to 54:45, watch until 56:30
+
+	- Put the child object as described in the video into "Ground Check"
+
+	- "whatIsGround" in our case is called "Ground" and the only things that should be called ground are the default layer (where the physical ground is) and the platform layer
