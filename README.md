@@ -1,7 +1,5 @@
 # RR Pre-Alpha Player Mechanics
 
--- Description still under development --
-
 Branch for All Pre-Alpha scripts and things
 
 # Before you get started...
@@ -15,5 +13,8 @@ Branch for All Pre-Alpha scripts and things
 # But wait there's more!
 
 - Fork this repo
+ 
+
+** Still under development **
 
 :)
