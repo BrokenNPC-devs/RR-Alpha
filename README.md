@@ -2,8 +2,19 @@
 
 Branch for All Pre-Alpha scripts and things
 
-- If you don't know anything about github, watch this plz: https://www.youtube.com/watch?v=0fKg7e37bQE
+# Before you get started...
 
-- Inside your designated project file, upload your script (.cs) and a text file with a brief description for the design team (Look at the "Player Movement" file if you have no idea what I'm talking about)
+- Understand the basics of github : https://www.youtube.com/watch?v=0fKg7e37bQE
+
+- Understand forking : https://www.youtube.com/watch?v=5oJHRbqEofs
+
+- Understand pull requests : https://www.youtube.com/watch?v=d5wpJ5VimSU
+ 
+# But wait there's more!
+
+- Fork this repo
+ 
+
+** Still under development **
 
 :)
