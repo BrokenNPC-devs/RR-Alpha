@@ -26,4 +26,6 @@ Grounding:
 
 	- Put the child object as described in the video into "Ground Check"
 
-	- "whatIsGround" in our case is called "Ground" and the only things that should be called ground are the default layer (where the physical ground is) and the platform layer
+	- "whatIsGround" in our case is called "Ground" and the only things that should be called ground are the default 
+	
+	   layer (where the physical ground is) and the platform layer
