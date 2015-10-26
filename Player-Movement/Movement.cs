@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
+ using System.Collections;
 
 public class Movement : MonoBehaviour {
 
 	public LayerMask ground;
+	public LayerMask platform;
 	public Transform groundCheck;
+	public Transform platformCheck;
 
 	bool facingRight = true;
 	bool jump = false;
 	bool jumpCancel = false;
 	bool doubleTap = false;
 	bool isGrounded = false;
+	bool isPlatformed = false;
 
 	float dropTime = 0f;
 	float dropDiff = 0.15f;     //tweakable
@@ -20,6 +23,7 @@ public class Movement : MonoBehaviour {
 	float runSpeed = 20f;       //tweakable
 	float jumpSpeed = 55f;     //tweakable
 	float groundRadius = 0.75f; //tweakable
+	float platformRadius = 0.75f; //tweatkable
 
 	Rigidbody2D rb;
 
@@ -32,11 +36,12 @@ public class Movement : MonoBehaviour {
 	void Update () {
 
 		isGrounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, ground);
+		isPlatformed = Physics2D.OverlapCircle (platformCheck.position, platformRadius, platform);
 
 		gameObject.layer = 8;
 
 		// Platform Mechanic
-		if (Input.GetAxis ("Vertical") < 0 && Input.GetButtonDown ("Jump") && isGrounded) {
+		if (Input.GetAxis ("Vertical") < 0 && Input.GetButtonDown ("Jump") && isPlatformed) {
 			jump = false;
 			Physics2D.IgnoreLayerCollision (8, 9);
 			dropTime = Time.time;
@@ -48,14 +53,16 @@ public class Movement : MonoBehaviour {
 		
 		
 		// Jump Mechanic
-		if (Input.GetButtonDown ("Jump") && isGrounded && Input.GetAxisRaw ("Vertical") == 0)  // Player starts pressing the button
+		if (Input.GetButtonDown ("Jump") && isGrounded)  // Player starts pressing the button
 			jump = true;
-		if (Input.GetButtonUp ("Jump") && !isGrounded)   // Player stops pressing the button
+		else if (Input.GetButtonDown ("Jump") && isPlatformed && Input.GetAxis("Vertical") == 0f)
+			jump = true;
+		if (Input.GetButtonUp ("Jump") && !isGrounded && !isPlatformed)   // Player stops pressing the button
 			jumpCancel = true;
 		
 		
 		// Double Tap Mechanic
-		if (Input.GetButtonDown ("Horizontal") && isGrounded) {
+		if (Input.GetButtonDown ("Horizontal") && (isGrounded || isPlatformed)) {
 			if(Time.time - tapTime > 0f && Time.time - tapTime < tapDiff)
 				doubleTap = true;
 			else if(Time.time - tapTime == 0f || Time.time - tapTime > tapDiff)
