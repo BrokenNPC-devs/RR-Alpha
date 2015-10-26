@@ -4,6 +4,8 @@ Layers:
 
 - Make layer 9 the "platform" layer, all platforms should be on this layer
 
+- Make layer 10 the "ground" layer, the ground should be on this layer
+
 Colliders: 
 
 - R should be a 2D box collider 
@@ -24,8 +26,14 @@ Grounding:
 
 - Click on the link below and skip to 54:45, watch until 56:30
 
-	- Put the child object as described in the video into "Ground Check"
-
-	- "whatIsGround" in our case is called "Ground" and the only things that should be called ground are the default 
+	1) Create empty Game Objects "Platform Check" and "Ground Check"
 	
-	   layer (where the physical ground is) and the platform layer
+	2) Attach a visual aid to the objects so you can see them
+	
+	3) Make the objects R's children
+	
+	3) Attach "Platform Check" object to "Platform Check" public variable (should be under "Movement Script" in 
+	
+	   components). Attach "Ground Check" object to "Ground Check" public variable.
+	
+	5) Make "whatIsGround" the ground layer and "whatIsPlatform" the platform layer. 
