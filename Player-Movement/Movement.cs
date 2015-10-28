@@ -35,25 +35,25 @@ public class Movement : MonoBehaviour {
 
 	void Update () {
 
-		isGrounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, ground);
-		isPlatformed = Physics2D.OverlapCircle (platformCheck.position, platformRadius, platform);
+		isGrounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, ground); //check if on the ground
+		isPlatformed = Physics2D.OverlapCircle (platformCheck.position, platformRadius, platform); //check if on a platform
 
 		gameObject.layer = 8;
 
 		// Platform Mechanic
 		if (Input.GetAxis ("Vertical") < 0 && Input.GetButtonDown ("Jump") && isPlatformed) {
 			jump = false;
-			Physics2D.IgnoreLayerCollision (8, 9);
-			dropTime = Time.time;
+			Physics2D.IgnoreLayerCollision (8, 9); //ignore collision between player and platform 
+			dropTime = Time.time; //start a timer
 		}
-		if (Time.time - dropTime > 0f && Time.time - dropTime >= dropDiff) {
+		if (Time.time - dropTime > 0f && Time.time - dropTime >= dropDiff) { //if x amount of time has passed, reset the "ignore ollision"
 			Physics2D.IgnoreLayerCollision (8, 9, false);
 			dropTime = 0f;
 		}
 		
 		
 		// Jump Mechanic
-		if (Input.GetButtonDown ("Jump") && isGrounded)  // Player starts pressing the button
+		if (Input.GetButtonDown ("Jump") && isGrounded)  // Player starts pressing the jump button
 			jump = true;
 		else if (Input.GetButtonDown ("Jump") && isPlatformed && Input.GetAxis("Vertical") == 0f)
 			jump = true;
@@ -63,15 +63,15 @@ public class Movement : MonoBehaviour {
 		
 		// Double Tap Mechanic
 		if (Input.GetButtonDown ("Horizontal") && (isGrounded || isPlatformed)) {
-			if(Time.time - tapTime > 0f && Time.time - tapTime < tapDiff)
+			if(Time.time - tapTime > 0f && Time.time - tapTime < tapDiff) //player doublee taps button
 				doubleTap = true;
-			else if(Time.time - tapTime == 0f || Time.time - tapTime > tapDiff)
+			else if(Time.time - tapTime == 0f || Time.time - tapTime > tapDiff) //player does not double tap button
 				doubleTap = false;
 			tapTime = Time.time;
 		}
-		if (doubleTap)
+		if (doubleTap) // if player double tapped, run
 			Run ();
-		if (!doubleTap)
+		if (!doubleTap) // if not, walk
 			Walk ();
 		
 		
@@ -79,24 +79,30 @@ public class Movement : MonoBehaviour {
 	
 	void Run() {
 		
-		float move = Input.GetAxisRaw("Horizontal");
-		if (move > 0 && !facingRight)
+		float move = Input.GetAxisRaw("Horizontal"); //ignore
+		if (move > 0 && !facingRight) //ignore
 			Flip ();
-		if (move < 0 && facingRight) 
+		if (move < 0 && facingRight) //ignore
 			Flip ();
-		rb.velocity = new Vector2 (move * runSpeed, rb.velocity.y);
-		if (!Input.GetButton ("Horizontal"))
+		rb.velocity = new Vector2 (move * runSpeed, rb.velocity.y); //ignore
+		if (!Input.GetButton ("Horizontal")) //if not pressing horizontal movement button, stop running
 			doubleTap = false;
+		if(!isGrounded && !isPlatformed && (rb.velocity.x == (move * runSpeed))) { //if your velocity in the x direction in the air is equal to the running velocity
+			if(Input.GetButtonDown("Horizontal")) { //if you press the horizontal movement button 
+				doubleTap = false; // cancel the double tap
+				Walk (); //change to walking speed
+			}
+		}
 	}
 	
 	void Walk() {
 		
-		float move = Input.GetAxisRaw("Horizontal");
-		if (move > 0 && !facingRight)
+		float move = Input.GetAxisRaw("Horizontal"); //ignore
+		if (move > 0 && !facingRight) //ignore
 			Flip ();
-		if (move < 0 && facingRight) 
+		if (move < 0 && facingRight) //ignore
 			Flip ();
-		rb.velocity = new Vector2 (move * walkSpeed, rb.velocity.y);
+		rb.velocity = new Vector2 (move * walkSpeed, rb.velocity.y); //ignore
 		
 	}
 	
@@ -109,16 +115,16 @@ public class Movement : MonoBehaviour {
 		}
 		
 		if (jumpCancel) {
-			if (rb.velocity.y > 0) { 
+			if (rb.velocity.y > 0) {
 				rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2f);      // Change upward velocity by a factor of 1/x, x is tweakable
 			}
 			jumpCancel = false;
 		}
-		
-		
+
+
 	}
 	
-	void Flip() {
+	void Flip() { //ignore
 		facingRight = !facingRight;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
