@@ -20,7 +20,25 @@ Colliders:
 
 	4) Make the "Surface Arc" 90 degrees (Tweakable)
 
-- Make the ground whatever kind of collider you want
+- Make the ground whatever kind of collider you want, except for slants, slants are stupid
+
+	- Slants should be 2D edge colliders
+		
+		1) Check the "Used By Effector" Box"
+		
+		2) Add "Surface Effector 2D"
+		
+		3) Tweak "speed," "speed variation," and "force scale" to your liking
+		
+		4) If you have walls in the same scene check "Use Bounce" while your at it
+
+- Walls should be 2D edge colliders
+
+	**Skip these steps if you have slants in the same scene and you followed those steps **
+	
+	1) Add "Surface Effector 2D"
+	
+	2) Check "Use Bounce"
 
 Grounding:
 
