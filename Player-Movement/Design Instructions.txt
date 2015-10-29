@@ -28,9 +28,11 @@ Colliders:
 		
 		2) Add "Surface Effector 2D"
 		
-		3) Tweak "speed," "speed variation," and "force scale" to your liking
+		3) Tweak "speed" and "speed variation" to your liking
 		
-		4) If you have walls in the same scene check "Use Bounce" while your at it
+		4) "Force Impusle" should be zero
+		
+		5) If you have walls in the same scene check "Use Bounce" while your at it
 
 - Walls should be 2D edge colliders
 
