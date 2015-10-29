@@ -36,14 +36,16 @@ Branch for All Pre-Alpha scripts and things
  
 # UmadBro?
 
-- If you ever get stuck while scripting or something, google and reddit are your best friends
+- If you ever get stuck while scripting or something, read through the Unity Scripting API and look for a class that might help(link above)
+
+- If you still find yourself struggling, try to play around with some of the different options inside unity (like collisions matrix, physics effectors, inputs, etc)
  
-- If you find that reddit or google arn't helping, you might want to consider rethinking what you're doing
- 
-- Don't forget to always ask other devs for help when you need it!
+- If you find that doesn't help, google and reddit are your best friends
+
+- If that doesn't help, you might want to ask other devs for help and reconsider they way you're approaching the problem
 
 # Congrats! You read this whole thing!
 
-- Now get working 
+- Now get to wurk
 
 :)
