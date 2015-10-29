@@ -22,7 +22,7 @@ Branch for All Pre-Alpha scripts and things
  
   - Again, you don't have to read through the whole thing, but at least familiarize yourself with Physics2D & Rigidbody2D
 
-# Your Ready! Now what?
+# You're Ready! Now what?
 
 - Create and upload a folder named after your task
 
