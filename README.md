@@ -32,6 +32,8 @@ Branch for All Pre-Alpha scripts and things
 
  2) A .txt file containing any essential information that a designer would need to know prior to reading the script 
  
+ 3) Another .txt file containing any bugs you encounter
+ 
  - If you're confuze, take a look at the "Player-Movement" folder
  
 # UmadBro?
