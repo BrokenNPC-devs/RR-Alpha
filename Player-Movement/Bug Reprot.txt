@@ -3,3 +3,7 @@
 - Player goes through collider for a single frame
 
 - Player slides down slopes (should stay still)
+
+11/16/2015
+
+- Player thinks wall is ground 
