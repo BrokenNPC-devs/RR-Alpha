@@ -56,8 +56,12 @@ public class Movement : MonoBehaviour {
 			Flip ();
 		if (move < 0 && facingRight)
 			Flip ();
-		if (Input.GetAxisRaw ("Vertical") < 0f)
+		if (Input.GetAxisRaw ("Vertical") < 0f) 
+		{
 			move = 0;
+			doubleTap = false;
+			Walk ();
+		}
 		rb.velocity = new Vector2 (move * runSpeed, rb.velocity.y);
 		if (!Input.GetButton ("Horizontal")) //if not pressing horizontal movement button, stop running
 			doubleTap = false;
